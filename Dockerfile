@@ -3,12 +3,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /source
 
 # Копіюємо проект і відновлюємо залежності
-COPY ["WebApiPizushi/WebApiPizushi.csproj", "WebApiPizushi/"]
-RUN dotnet restore "WebApiPizushi/WebApiPizushi.csproj"
+COPY ["Project1/Project1.csproj", "Project1/"]
+RUN dotnet restore "Project1/Project1.csproj"
 
 # Копіюємо всі файли і будуємо додаток
 COPY . .
-WORKDIR /source/WebApiPizushi
+WORKDIR /source/Project1
 RUN dotnet publish -c Release -o /app
 
 # Stage 2: Final image for runtime
@@ -20,4 +20,4 @@ WORKDIR /app
 COPY --from=build /app .
 
 # Запускаємо додаток
-ENTRYPOINT ["dotnet", "WebApiPizushi.dll"]
+ENTRYPOINT ["dotnet", "Project1.dll"]
